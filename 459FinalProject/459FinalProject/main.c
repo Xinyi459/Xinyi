@@ -11,15 +11,18 @@
 #include <string.h>
 #include "getData.h"
 #include "getNum.h"
+#include "getCond.h"
+#include "collision.h"
 
 int main(int argc, const char * argv[]) {
-    double *mesh;
-    mesh=ReadCSV("/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/mesh.csv");
-    double *sphere;
-    sphere=ReadCSV("/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/sphere.csv");
-    int n=getS("/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/sphere.csv");
-    double *Apex=getApex("/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/mesh.csv");
-    double *Center=getCenter("/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/sphere.csv");
-    
-    
+    int*colli;
+    int numT=getT("/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/mesh.csv");
+    int numS=getS("/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/sphere.csv");
+    colli=collision("/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/mesh.csv","/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/sphere.csv");
+    for(int i=0;i<numT*numS;i++){
+        printf("%d\n",colli[i]);
+    }
+    return 0;
 }
+
+  
