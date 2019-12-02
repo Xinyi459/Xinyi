@@ -18,4 +18,33 @@ double *getboxS(const char *filenameS);
 ///box1max:x,y are center, z is max of old box
 double* nextBoxS1(double *boxS);
 
+///box2min:x,z are center,y is old box
+///box2max:x,z are old box, y is center
+double* nextBoxS2(double *boxS);
+
+///box3min:center
+///box3max:box
+double* nextBoxS3(double *boxS);
+
+///box4min:y,z are center,x is old box
+///box4max:y,z are old box, x is center
+double* nextBoxS4(double *boxS);
+
+///box5min:old box
+///box5max:center
+double* nextBoxS5(double *boxS);
+
+///box6min:x is center,y,z are old box
+///box6max:x is old box, y,z zre center
+double* nextBoxS6(double *boxS);
+
+///box7min:x,y is center,z are old box
+///box7max:x,y is old box, z zre center
+double* nextBoxS7(double *boxS);
+
+///box8min:y is center,x,z are old box
+///box8max:y is old box, x,z zre center
+double* nextBoxS8(double *boxS);
+
+
 #endif /* TreeforS_h */

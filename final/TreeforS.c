@@ -128,4 +128,89 @@ double* nextBoxS3(double *boxS){
     return nextBoxS3;
 }
 
+///box4min:y,z are center,x is old box
+///box4max:y,z are old box, x is center
+double* nextBoxS4(double *boxS){
+    ///get center of the old box
+    double Box_center[3]={(boxS[3]-boxS[0])/2,(boxS[4]-boxS[1])/2,(boxS[5]-boxS[2])/2};
+    double *nextBoxS4;
+    nextBoxS4=(double*)malloc(6*sizeof(double));
+    //find max x,y,z
+    nextBoxS4[0]=boxS[0];
+    nextBoxS4[1]=Box_center[1];
+    nextBoxS4[2]=Box_center[2];
+    nextBoxS4[3]=Box_center[0];
+    nextBoxS4[4]=boxS[4];
+    nextBoxS4[5]=boxS[5];
+    return nextBoxS4;
+}
 
+///box5min:old box
+///box5max:center
+double* nextBoxS5(double *boxS){
+    ///get center of the old box
+    double Box_center[3]={(boxS[3]-boxS[0])/2,(boxS[4]-boxS[1])/2,(boxS[5]-boxS[2])/2};
+    double *nextBoxS5;
+    nextBoxS5=(double*)malloc(6*sizeof(double));
+    int index=0;
+    for(int i=0;i<3;i++){
+        nextBoxS5[index]=boxS[i];
+        index++;
+    }
+    for(int i=0;i<3;i++){
+        nextBoxS5[index]=Box_center[i];
+        index++;
+    }
+    return nextBoxS5;
+}
+
+///box6min:x is center,y,z are old box
+///box6max:x is old box, y,z zre center
+double* nextBoxS6(double *boxS){
+    ///get center of the old box
+    double Box_center[3]={(boxS[3]-boxS[0])/2,(boxS[4]-boxS[1])/2,(boxS[5]-boxS[2])/2};
+    double *nextBoxS6;
+    nextBoxS6=(double*)malloc(6*sizeof(double));
+    //find max x,y,z
+    nextBoxS6[0]=Box_center[0];
+    nextBoxS6[1]=boxS[1];
+    nextBoxS6[2]=boxS[2];
+    nextBoxS6[3]=boxS[3];
+    nextBoxS6[4]=Box_center[1];
+    nextBoxS6[5]=Box_center[2];
+    return nextBoxS6;
+}
+
+///box7min:x,y is center,z are old box
+///box7max:x,y is old box, z zre center
+double* nextBoxS7(double *boxS){
+    ///get center of the old box
+    double Box_center[3]={(boxS[3]-boxS[0])/2,(boxS[4]-boxS[1])/2,(boxS[5]-boxS[2])/2};
+    double *nextBoxS7;
+    nextBoxS7=(double*)malloc(6*sizeof(double));
+    //find max x,y,z
+    nextBoxS7[0]=Box_center[0];
+    nextBoxS7[1]=Box_center[1];
+    nextBoxS7[2]=boxS[2];
+    nextBoxS7[3]=boxS[3];
+    nextBoxS7[4]=boxS[4];
+    nextBoxS7[5]=Box_center[2];
+    return nextBoxS7;
+}
+
+///box8min:y is center,x,z are old box
+///box8max:y is old box, x,z zre center
+double* nextBoxS8(double *boxS){
+    ///get center of the old box
+    double Box_center[3]={(boxS[3]-boxS[0])/2,(boxS[4]-boxS[1])/2,(boxS[5]-boxS[2])/2};
+    double *nextBoxS8;
+    nextBoxS8=(double*)malloc(6*sizeof(double));
+    //find max x,y,z
+    nextBoxS8[0]=boxS[0];
+    nextBoxS8[1]=Box_center[1];
+    nextBoxS8[2]=boxS[2];
+    nextBoxS8[3]=Box_center[0];
+    nextBoxS8[4]=boxS[4];
+    nextBoxS8[5]=Box_center[2];
+    return nextBoxS8;
+}
