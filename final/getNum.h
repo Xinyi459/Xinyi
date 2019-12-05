@@ -10,7 +10,7 @@
 #define getNum_h
 
 #include <stdio.h>
-//get the number of triangles and spheres
+///get the number of triangles and spheres
 int getT(const char *filename);
 int getS(const char *filename);
 #endif /* getNum_h */
