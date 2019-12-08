@@ -14,6 +14,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+
 
 int *collision(const char *filenameT, const char *filenameS) {
   double *S = ReadCSV(filenameS);
@@ -29,6 +31,7 @@ int *collision(const char *filenameT, const char *filenameS) {
   double refvect[9];
   int *collision;
   collision = (int *)malloc(numT * numS * sizeof(int));
+  clock_t start = clock();
   for (int i = 0; i < numT * numS; i++) {
     collision[i] = 1; // 1 means no collision
   }
@@ -127,5 +130,8 @@ int *collision(const char *filenameT, const char *filenameS) {
       }
     }
   }
+  clock_t end = clock();
+  double time = (double)(end- start) ;
+  printf("the first method used time: %f\n",time);
   return collision;
 }
