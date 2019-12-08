@@ -27,8 +27,6 @@ void create_wall_bodies(ChSystemNSC& mphysicalSystem){
                                                                    true,        // collide enable?
                                                                    true);       // visualization?
         mrigidBody->SetPos(ChVector<>(6, 1, 0));
-        //mrigidBody->SetMaterialSurface(mmaterial);  // use shared surface properties
-        
         mphysicalSystem.Add(mrigidBody);
         // optional, attach a texture for better visualization
         auto mtexture = chrono_types::make_shared<ChTexture>();
@@ -166,15 +164,13 @@ void create_wall_bodies(ChSystemNSC& mphysicalSystem){
     
     
     
-    // Create balls that will collide with wall
+    // Create balls that will collide with car
     for(int ui=0;ui<1;ui++){
         auto mrigidBall = chrono_types::make_shared<ChBodyEasySphere>(1,      // radius
                                                                       40,   // density
                                                                       true,   // collide enable?
                                                                       true);  // visualization?
-        //mrigidBall->SetPos(ChVector<>(0, 0, 0));
         mrigidBall->SetPos(ChVector<>(-3, 1, 10));
-        //mrigidBall->SetMaterialSurface(mmaterial);
         mrigidBall->SetPos_dt(ChVector<>(0, 0, -2));          // set initial speed
         mrigidBall->GetMaterialSurfaceNSC()->SetFriction(0.4f);  // use own (not shared) matrial properties
         mrigidBall->GetMaterialSurfaceNSC()->SetCompliance(0.0);
@@ -186,25 +182,9 @@ void create_wall_bodies(ChSystemNSC& mphysicalSystem){
         mtextureball->SetTextureFilename(GetChronoDataFile("bluwhite.png"));
         mrigidBall->AddAsset(mtextureball);
     }
-    for(int ui=0;ui<1;ui++){
-        auto mrigidBall = chrono_types::make_shared<ChBodyEasySphere>(1,      // radius
-                                                                      40,   // density
-                                                                      true,   // collide enable?
-                                                                      true);  // visualization?
-        //mrigidBall->SetPos(ChVector<>(0, 0, 0));
-        mrigidBall->SetPos(ChVector<>(5, 1, 19));
-        //mrigidBall->SetMaterialSurface(mmaterial);
-        mrigidBall->SetPos_dt(ChVector<>(0, 0, -2));          // set initial speed
-        mrigidBall->GetMaterialSurfaceNSC()->SetFriction(0.4f);  // use own (not shared) matrial properties
-        mrigidBall->GetMaterialSurfaceNSC()->SetCompliance(0.0);
-        mrigidBall->GetMaterialSurfaceNSC()->SetComplianceT(0.0);
-        mrigidBall->GetMaterialSurfaceNSC()->SetDampingF(0.2f);
-        mphysicalSystem.Add(mrigidBall);
-        // optional, attach a texture for better visualization
-        auto mtextureball = chrono_types::make_shared<ChTexture>();
-        mtextureball->SetTextureFilename(GetChronoDataFile("bluwhite.png"));
-        mrigidBall->AddAsset(mtextureball);
-    }
+    
+
+    
 }
 
 
@@ -323,6 +303,7 @@ public:
         mphysicalSystem.AddLink(link_revoluteRF);
         
         // .. impose distance between two parts (as a massless rod with two spherical joints at the end)
+        // from 4 points on the body to 2 middle points of for lines of spindle, upper and lower line
         link_distRFU1 = chrono_types::make_shared<ChLinkDistance>();  // right, front, upper, 1
         link_distRFU1->Initialize(chassis, spindleRF, false, ChVector<>(0.5, 1.2, 1.2), ChVector<>(1.25, 1.2, 1));
         mphysicalSystem.AddLink(link_distRFU1);
@@ -632,6 +613,7 @@ public:
         scrollbar_steer = mdevice->getGUIEnvironment()->addScrollBar(true, rect<s32>(10, 105, 150, 120), 0, 101);
         scrollbar_steer->setMax(100);
         scrollbar_steer->setPos(50);
+        text_steer = mdevice->getGUIEnvironment()->addStaticText(L"Direction", rect<s32>(150, 85, 250, 100), false);
         
         // ..add a GUI text and GUI slider to control the stiffness
         scrollbar_FspringK = mdevice->getGUIEnvironment()->addScrollBar(true, rect<s32>(10, 125, 150, 140), 0, 102);
@@ -763,26 +745,17 @@ private:
 int main(int argc, char* argv[]) {
     GetLog() << "Copyright (c) 2017 projectchrono.org\nChrono version: " << CHRONO_VERSION << "\n\n";
     
-    //
-    // HERE YOU CREATE THE MECHANICAL SYSTEM OF CHRONO...
-    //
     
-    // 1- Create a Chrono physical system: all bodies and constraints
-    //    will be handled by this ChSystemNSC object.
     ChSystemNSC mphysicalSystem;
     
-    // 2.- Create the Irrlicht visualization.
+   
     ChIrrApp application(&mphysicalSystem, L"Parking", core::dimension2d<u32>(1000, 1000), false);
     ChIrrWizard::add_typical_Logo(application.GetDevice());
     ChIrrWizard::add_typical_Sky(application.GetDevice());
     ChIrrWizard::add_typical_Lights(application.GetDevice());
     ChIrrWizard::add_typical_Camera(application.GetDevice(), core::vector3df(0, 0, -6));
     
-    // 3- Create the rigid bodies of the simpified car suspension mechanical system
-    //   maybe setting position/mass/inertias of
-    //   their center of mass (COG) etc.
-    
-    // ..the world
+ 
     auto texture = chrono_types::make_shared<ChTexture>();
     texture->SetTextureFilename(GetChronoDataFile("blu.png"));
     
@@ -795,8 +768,6 @@ int main(int argc, char* argv[]) {
     mphysicalSystem.AddBody(my_ground);
     
     
-    
-    // ..the car (this class - see above - is a 'set' of bodies and links, automatically added at creation)
     MySimpleCar* mycar = new MySimpleCar(mphysicalSystem, application.GetSceneManager(), application.GetVideoDriver());
     
     
@@ -823,36 +794,19 @@ int main(int argc, char* argv[]) {
     application.AssetBindAll();
     application.AssetUpdateAll();
     
-    //
-    // USER INTERFACE
-    //
-    
-    // Create some graphical-user-interface (GUI) items to show on the screen.
-    // This requires an event receiver object -see above.
+   
     MyEventReceiver receiver(&mphysicalSystem, application.GetDevice(), mycar);
     
-    //
-    // SETTINGS
-    //
+   
     
-    mphysicalSystem.SetMaxItersSolverSpeed(20);  // the higher, the easier to keep the constraints 'mounted'.
+    mphysicalSystem.SetMaxItersSolverSpeed(20);
     
-    //
-    // THE SOFT-REAL-TIME CYCLE, SHOWING THE SIMULATION
-    //
-    
-    // This will help choosing an integration step which matches the
-    // real-time step of the simulation..
     ChRealtimeStepTimer m_realtime_timer;
     
     while (application.GetDevice()->run()) {
         // Irrlicht must prepare frame to draw
         application.BeginScene(true, true, SColor(255, 140, 161, 192));
         
-        // Irrlicht now draws simple lines in 3D world representing a
-        // skeleton of the mechanism, in this instant:
-        //
-        // .. draw solid 3D items (boxes, cylinders, shapes) belonging to Irrlicht scene, if any
         application.DrawAll();
         
         // .. draw a grid (rotated so that it's horizontal)
@@ -875,13 +829,9 @@ int main(int argc, char* argv[]) {
             }
         }
         
-        // The torque applied to wheels, using the ChLinkMotorRotationTorque links between
-        // wheels and truss, depends on many parameters (gear, throttle, etc):
+        
         mycar->ComputeWheelTorque();
         
-        // HERE CHRONO INTEGRATION IS PERFORMED: THE
-        // TIME OF THE SIMULATION ADVANCES FOR A SINGLE
-        // STEP:
         
         mphysicalSystem.DoStepDynamics(m_realtime_timer.SuggestSimulationStep(0.005));
         
