@@ -10,7 +10,7 @@
 #include "getCond.h"
 #include "getData.h"
 #include "getNum.h"
-#include "TreeforS.h"
+#include "getCond_new.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,18 +21,25 @@
 
 
 int main(int argc, const char *argv[]) {
- ///////////////first method//////////////
-  int *colli;
-  int numT = getT("/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/mesh.csv");
-  int numS = getS("/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/sphere.csv");
-  colli = collision("/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/mesh.csv",
-                    "/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/sphere.csv");
-////////////////second method//////////////
+    ///////////////first method////////////
+    /*
+    int *colli;
+    colli = collision("/Users/user/Documents/Xcode/Practice/459/459/mesh.csv",
+                      "/Users/user/Documents/Xcode/Practice/459/459/sphere.csv");
+     */
+    ////////////////second method//////////////
+    int pair[2]={1,1};
     
 
-///////////////output//////////////////////
+    
+    
+    
+    ///////////////output//////////////////////
+    /*
+    int numT = getT("/Users/user/Documents/Xcode/Practice/459/459/mesh.csv");
+    int numS = getS("/Users/user/Documents/Xcode/Practice/459/459/sphere.csv");
     FILE *fp = NULL;
-    fp = fopen("/Users/user/Documents/Xcode/Practice/459FinalProject/459FinalProject/output.csv", "a");
+    fp = fopen("/Users/user/Desktop/output/output.csv", "a");
     if(NULL == fp)
     {
         return -1;
@@ -47,6 +54,7 @@ int main(int argc, const char *argv[]) {
     }
     fclose(fp);
     fp = NULL;
-
-  return 0;
+     */
+    
+    return 0;
 }
