@@ -107,7 +107,7 @@ double *CrossMatrix(double *vect) {
     return C;
 }
 
-int in_or_out(int pair[2],const char *filenameT,const char *filenameS){
+int colli(int pair[2],const char *filenameT,const char *filenameS){
     double *Apex = getApex(filenameT);
     double *S = getCenter(filenameS);
     double T[9];
@@ -118,7 +118,6 @@ int in_or_out(int pair[2],const char *filenameT,const char *filenameS){
     for(int i=0;i<3;i++){
         center[i]=S[pair[0]*3+i];
     }
-    //double *plane=GetplaneT(pair,filenameT);
     double *centerP=project(pair,filenameT,filenameS);
     // get cross product
     double *C; // the cross matrix PA
@@ -220,5 +219,60 @@ int in_or_out(int pair[2],const char *filenameT,const char *filenameS){
             break;
         }
     }
-    return flag;
+    //collision or not 1 means collision
+    int r = S[3];
+    int colli=1;
+    double dist=0;
+    double line1[3],line2[3];
+    if(flag==1){
+        for(int i=0;i<3;i++){
+            dist+=(center[i]-centerP[i])*(center[i]-centerP[i]);
+        }
+        dist=sqrt(dist);
+        if(dist>r){
+            colli=0;
+            dist=0;
+        }
+        dist=0;
+    }
+    else{
+        for(int i=0;i<3;i++){
+            line1[i]=center[i]-T[i]; //PA
+            line2[i]=T[3+i]-T[i];//BA
+        }
+        
+        for(int i=0;i<3;i++){
+            dist+=line1[i]*line2[2];
+        }
+        dist=dist/sqrt(line2[0]*line2[0]+line2[1]*line2[1]+line2[2]*line2[2]);
+        if(dist<=r){
+            colli=1;
+        }
+        for(int i=0;i<3;i++){
+            line1[i]=center[i]-T[3+i]; //PB
+            line2[i]=T[6+i]-T[3+i];//CB
+        }
+        for(int i=0;i<3;i++){
+            dist+=line1[i]*line2[2];
+        }
+        dist=dist/sqrt(line2[0]*line2[0]+line2[1]*line2[1]+line2[2]*line2[2]);
+        if(dist<=r){
+            colli=1;
+        }
+        for(int i=0;i<3;i++){
+            line1[i]=center[i]-T[6+i]; //PC
+            line2[i]=T[i]-T[6+i];//AC
+        }
+        
+        for(int i=0;i<3;i++){
+            dist+=line1[i]*line2[2];
+        }
+        dist=dist/sqrt(line2[0]*line2[0]+line2[1]*line2[1]+line2[2]*line2[2]);
+        if(dist<=r){
+            colli=1;
+        }
+    }
+    return colli;
 }
+
+

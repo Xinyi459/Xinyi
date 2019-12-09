@@ -18,5 +18,6 @@ double*project(int pair[2],const char *filenameT,const char *filenameS);
 double *CrossMatrix(double *vect);
 
 ///1 means in, 0 means out
-int in_or_out(int pair[2],const char *filenameT,const char *filenameS);
+///1 means colli, 0 means no
+int colli(int pair[2],const char *filenameT,const char *filenameS);
 #endif /* getCond_new_h */
