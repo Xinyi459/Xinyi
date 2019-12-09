@@ -49,7 +49,3 @@ double* nextBoxS8(double *boxS,int r);
 ///determing if the space is a box
 int IsBox(double *box);
 #endif /* TreeforS_h */
-
-
-
-
