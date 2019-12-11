@@ -11,13 +11,13 @@
 
 #include <stdio.h>
 
-double *GetplaneT(int pair[2],const char *filenameT);
+double *GetplaneT(ouble triangle_data[9]);
 
-double*project(int pair[2],const char *filenameT,const char *filenameS);
+double *project(double triangle_data[9], double sphere_data[4]);
 
 double *CrossMatrix(double *vect);
 
 ///1 means in, 0 means out
 ///1 means colli, 0 means no
-int colli(int pair[2],const char *filenameT,const char *filenameS);
+int colli(double triangle_data[9], double sphere_data[4]);
 #endif /* getCond_new_h */
