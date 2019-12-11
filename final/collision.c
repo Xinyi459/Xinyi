@@ -9,7 +9,7 @@
 #include "collision.h"
 #include "getCond.h"
 #include "getData.h"
-#include "getNum.h"
+#include "getCond_new.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,8 +23,10 @@ int *collision(const char *filenameT, const char *filenameS) {
     double *Apex = getApex(filenameT);
     double *center = getCenter(filenameS);
     int *Inout = inORout(filenameT, filenameS);
-    int numT = getT(filenameT);
-    int numS = getS(filenameS);
+    double *A=ReadCSV(filenameT);
+    int numT = A[0];
+    double *B=ReadCSV(filenameS);
+    int numS = B[4];
     double P[9];
     double Pc[3];
     double vectc[9];

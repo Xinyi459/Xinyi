@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 
-double *GetplaneT(ouble triangle_data[9]);
+double *GetplaneT(double triangle_data[9]);
 
 double *project(double triangle_data[9], double sphere_data[4]);
 

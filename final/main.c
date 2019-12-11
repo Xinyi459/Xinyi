@@ -9,7 +9,6 @@
 #include "collision.h"
 #include "getCond.h"
 #include "getData.h"
-#include "getNum.h"
 #include "getCond_new.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,22 +21,22 @@
 
 int main(int argc, const char *argv[]) {
     ///////////////first method////////////
-    /*
     int *colli;
     colli = collision("/Users/user/Documents/Xcode/Practice/459/459/mesh.csv",
                       "/Users/user/Documents/Xcode/Practice/459/459/sphere.csv");
-     */
+    
     ////////////////second method//////////////
-    int pair[2]={1,1};
+
     
 
     
     
     
     ///////////////output//////////////////////
-    /*
-    int numT = getT("/Users/user/Documents/Xcode/Practice/459/459/mesh.csv");
-    int numS = getS("/Users/user/Documents/Xcode/Practice/459/459/sphere.csv");
+    double *A=ReadCSV("/Users/user/Documents/Xcode/Practice/459/459/mesh.csv");
+    int numT = A[0] ;
+    double *B=ReadCSV("/Users/user/Documents/Xcode/Practice/459/459/sphere.csv");
+    int numS = B[4] ;
     FILE *fp = NULL;
     fp = fopen("/Users/user/Desktop/output/output.csv", "a");
     if(NULL == fp)
@@ -54,7 +53,7 @@ int main(int argc, const char *argv[]) {
     }
     fclose(fp);
     fp = NULL;
-     */
+     
     
     return 0;
 }

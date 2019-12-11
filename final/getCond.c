@@ -8,7 +8,7 @@
 
 #include "getCond.h"
 #include "getData.h"
-#include "getNum.h"
+#include "getCond_new.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,7 +18,8 @@ double *
 Getplane(const char *filename) { // the number of apexs is len*3/4，number of
     // triangles is lenT/4
     double *Apex = getApex(filename);
-    int lenT = getT(filename) * 4;
+    double *A=ReadCSV(filename);
+    int lenT = A[0] * 4;
     double *plane, *a, *b, *c, *d;
     plane = (double *)malloc(lenT * 4 / 3 * sizeof(double));
     a = (double *)malloc(lenT / 4 * sizeof(double));
@@ -57,8 +58,10 @@ Getplane(const char *filename) { // the number of apexs is len*3/4，number of
 double *CenterToP(const char *filenameT, const char *filenameS) {
     double *center = getCenter(filenameS);
     double *plane = Getplane(filenameT);
-    int lenT = getT(filenameT) * 4;
-    int lens = getS(filenameS) * 3;
+    double *A=ReadCSV(filenameT);
+    int lenT = A[0] * 4;
+    double *B=ReadCSV(filenameS);
+    int lens = B[4] * 3;
     double *centerP;
     centerP = (double *)malloc(lens * lenT / 4 * sizeof(double));
     int step = 0;
@@ -94,32 +97,17 @@ double *CenterToP(const char *filenameT, const char *filenameS) {
             step += 3;
         }
     }
-    for(int i=12;i<15;i++){
-        printf("%f ",centerP[i]);
-    }
     return centerP;
 }
 
-double *CrossMatrix(double *vect) {
-    double *C;
-    C = (double *)malloc(9 * sizeof(double));
-    C[0] = 0;
-    C[1] = -vect[2];
-    C[2] = vect[1];
-    C[3] = vect[2];
-    C[4] = 0;
-    C[5] = -vect[0];
-    C[6] = -vect[1];
-    C[7] = vect[0];
-    C[8] = 0;
-    return C;
-}
 
 int *inORout(const char *filenameT, const char *filenameS) {
     double *Apex = getApex(filenameT);
     double *Project = CenterToP(filenameT, filenameS);
-    int numT = getT(filenameT);
-    int numS = getS(filenameS);
+    double *A=ReadCSV(filenameT);
+    int numT = A[0] ;
+    double *B=ReadCSV(filenameS);
+    int numS = B[4] ;
     // get cross product
     double *C; // the cross product
     double *anotherC;

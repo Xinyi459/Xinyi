@@ -7,9 +7,7 @@
 //
 
 #include "getCond_new.h"
-#include "getCond.h"
 #include "getData.h"
-#include "getNum.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>

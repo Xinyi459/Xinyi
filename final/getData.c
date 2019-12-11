@@ -7,7 +7,6 @@
 //
 
 #include "getData.h"
-#include "getNum.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -50,14 +49,14 @@ double *getApex(const char *filename) {
     double *T;
     double *Apex;
     T = ReadCSV(filename);
-    int num = getT(filename);
+    double num=T[0];
     Apex = (double *)malloc(num * 9 * sizeof(double));
     int k = 0;
-    for (int i = 0; i < num; i++) {
-        for (int j = i * 10 + 1; j < i * 10 + 10; j++) {
-            Apex[k] = T[j];
+    for (int i = 1; i < num*9; i++) {
+        
+            Apex[k] = T[i];
             k += 1;
-        }
+        
     }
     return Apex;
 }
@@ -66,14 +65,13 @@ double *getCenter(const char *filename) {
     double *S;
     double *center;
     S = ReadCSV(filename);
-    int num = getS(filename);
+    int num = S[4];
     center = (double *)malloc(num * 3 * sizeof(double));
     int k = 0;
-    for (int i = 0; i < num; i++) {
-        for (int j = i * 5; j < i * 5 + 3; j++) {
-            center[k] = S[j];
+    for (int i = 5; i < num*3+5; i++) {
+            center[k] = S[i];
             k += 1;
-        }
+        
     }
     return center;
 }
