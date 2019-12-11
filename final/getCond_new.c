@@ -188,11 +188,8 @@ int colli(double triangle_data[9], double sphere_data[4]) {
   // in or out
   int flag = 1; // in the triangle
   for (int i = 0; i < 3; i++) {
-    if (Dot[i] > 0) {
-      continue;
-    } else {
+    if (Dot[i] < 0) {
       flag = 0;
-      break;
     }
   }
   // collision or not; 1 means collision
@@ -205,22 +202,23 @@ int colli(double triangle_data[9], double sphere_data[4]) {
       dist += (center[i] - centerP[i]) * (center[i] - centerP[i]);
     }
     dist = fabs(sqrt(dist));
-    if (dist < r) {
+    if (dist <= r) {
       colli = 1;
       dist = 0;
     }
     dist = 0;
   } else {
+      
     for (int i = 0; i < 3; i++) {
       line1[i] = center[i] - triangle_data[i];            // AP
       line2[i] = triangle_data[3 + i] - triangle_data[i]; // AB
     }
-
     for (int i = 0; i < 3; i++) {
-      dist += pow(line1[i] * line2[i], 2);
+      dist += line1[i] * line2[i];
     }
-    dist = fabs(sqrt(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
-                                  line2[2] * line2[2]));
+    dist = fabs(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
+                                  line2[2] * line2[2]);
+      dist=sqrt(pow(line1[0],2)+pow(line1[1],2)+pow(line1[2],2)-pow(dist,2));
     if (dist <= r) {
       colli = 1;
     }
@@ -230,30 +228,32 @@ int colli(double triangle_data[9], double sphere_data[4]) {
       line1[i] = center[i] - triangle_data[3 + i];            // PB
       line2[i] = triangle_data[6 + i] - triangle_data[3 + i]; // CB
     }
-    for (int i = 0; i < 3; i++) {
-      dist += pow(line1[i] * line2[i], 2);
-    }
-    dist = fabs(sqrt(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
-                                  line2[2] * line2[2]));
-    if (dist <= r) {
-      colli = 1;
-    }
-    dist = 0;
+      for (int i = 0; i < 3; i++) {
+          dist += line1[i] * line2[i];
+      }
+      dist = fabs(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
+                               line2[2] * line2[2]);
+      dist=sqrt(pow(line1[0],2)+pow(line1[1],2)+pow(line1[2],2)-pow(dist,2));
+      if (dist <= r) {
+          colli = 1;
+      }
+      dist = 0;
 
     for (int i = 0; i < 3; i++) {
       line1[i] = center[i] - triangle_data[6 + i];        // PC
       line2[i] = triangle_data[i] - triangle_data[6 + i]; // AC
     }
 
-    for (int i = 0; i < 3; i++) {
-      dist += pow(line1[i] * line2[i], 2);
-    }
-    dist = fabs(sqrt(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
-                                  line2[2] * line2[2]));
-    if (dist <= r) {
-      colli = 1;
-    }
-    dist = 0;
+      for (int i = 0; i < 3; i++) {
+          dist += line1[i] * line2[i];
+      }
+      dist = fabs(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
+                               line2[2] * line2[2]);
+      dist=sqrt(pow(line1[0],2)+pow(line1[1],2)+pow(line1[2],2)-pow(dist,2));
+      if (dist <= r) {
+          colli = 1;
+      }
+      dist = 0;
   }
   return colli;
 }

@@ -15,20 +15,19 @@
 #include <string.h>
 
 int main(int argc, const char *argv[]) {
-  const char *filenameS =
-      "/Users/user/Documents/Xcode/Practice/459/459/sphere.csv";
-  const char *filenameT =
-      "/Users/user/Documents/Xcode/Practice/459/459/bunny_mesh1.csv";
-  // const char
-  // *filenameT="/Users/user/Documents/Xcode/Practice/459/459/mesh.csv";
+  const char *filenameS ="/Users/user/Documents/Xcode/Practice/459/459/sphere.csv";
+  const char *filenameT ="/Users/user/Documents/Xcode/Practice/459/459/bunny_mesh1.csv";
+  // const char*filenameT="/Users/user/Documents/Xcode/Practice/459/459/mesh.csv";
 
   ///////////////first method////////////
-
   int *colli;
-
   colli = collision(filenameT, filenameS);
 
   ////////////////second method//////////////
+    
+    
+    
+    
 
   ///////////////output//////////////////////
 
@@ -52,13 +51,6 @@ int main(int argc, const char *argv[]) {
   fclose(fp);
   fp = NULL;
 
-  /*
-  double T[9]={-0.086531,0.109921 ,0.019496,
-      -0.089738 ,0.112618 ,0.019125,
-      -0.087057, 0.109770 ,0.016345 };
-  double S[4]={9,9,9,3};
-  collis = colli(T,S);
-  printf("%d\n",collis);
-   */
+   
   return 0;
 }

@@ -19,16 +19,18 @@
 int *collision(const char *filenameT, const char *filenameS) {
   double *S = ReadCSV(filenameS);
   int r = S[3];
-  printf("r=%d\n", r);
   double *Apex = getApex(filenameT);
   double *center = getCenter(filenameS);
+    
   int *Inout = inORout(filenameT, filenameS);
+   
   double *A = ReadCSV(filenameT);
   int numT = A[0];
   double *B = ReadCSV(filenameS);
   int numS = B[4];
   double P[9];
-  double Pc[3];
+  double *Pc;
+    Pc=(double*)malloc(3*sizeof(double));
   double vectc[9];
   double refvect[9];
   int *collision;
@@ -80,6 +82,7 @@ int *collision(const char *filenameT, const char *filenameS) {
         dist =
             fabs(sqrt(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
                                    line2[2] * line2[2]));
+          dist=fabs(sqrt(pow(line1[0],2)+pow(line1[1],2)+pow(line1[1],2)-pow(dist,2)));
         if (dist <= r) {
           collision[c] = 1;
         }
@@ -96,6 +99,7 @@ int *collision(const char *filenameT, const char *filenameS) {
         dist =
             fabs(sqrt(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
                                    line2[2] * line2[2]));
+          dist=fabs(sqrt(pow(line1[0],2)+pow(line1[1],2)+pow(line1[1],2)-pow(dist,2)));
         if (dist <= r) {
           collision[c] = 1;
         }
@@ -112,34 +116,39 @@ int *collision(const char *filenameT, const char *filenameS) {
         dist =
             fabs(sqrt(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
                                    line2[2] * line2[2]));
+          dist=fabs(sqrt(pow(line1[0],2)+pow(line1[1],2)+pow(line1[1],2)-pow(dist,2)));
         if (dist <= r) {
-          collision[c] = 1;
+          collision[c] += 1;
         }
         dist = 0;
-
         c += 1;
       }
       ////////////////////////////////////////////////////////////////////////////
       else {
         double *centerP = CenterToP(filenameT, filenameS);
+         
+          
         // get the direction from Pc to centerP
         double dis[3];
+        double distance;
+          for (int k = 0; k < 3; k++) {
+              dis[k] =0;
+          }
         for (int k = 0; k < 3; k++) {
-          dis[k] += Pc[k] - centerP[i * 6 + j * 3 + k];
+          dis[k] += Pc[k] - centerP[i * numT*3 + j * 3 + k];
         }
-        double distance = 0;
+         
+        distance=0;
         for (int d = 0; d < 3; d++) {
           distance += pow(dis[d], 2);
         }
         distance = fabs(sqrt(distance));
-        if (distance > r) {
-          c += 1;
-          continue;
-        } else {
-          collision[c] = 1;
-          c += 1;
-          break;
+          
+         if(distance<=r) {
+          collision[c] += 1;
+          c+= 1;
         }
+          c+=1;
       }
     }
   }
