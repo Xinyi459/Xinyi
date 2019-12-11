@@ -170,7 +170,7 @@ void create_wall_bodies(ChSystemNSC& mphysicalSystem){
                                                                       40,   // density
                                                                       true,   // collide enable?
                                                                       true);  // visualization?
-        mrigidBall->SetPos(ChVector<>(-3, 1, 10));
+        mrigidBall->SetPos(ChVector<>(-3, 1, 15));
         mrigidBall->SetPos_dt(ChVector<>(0, 0, -2));          // set initial speed
         mrigidBall->GetMaterialSurfaceNSC()->SetFriction(0.4f);  // use own (not shared) matrial properties
         mrigidBall->GetMaterialSurfaceNSC()->SetCompliance(0.0);
@@ -574,6 +574,7 @@ public:
         double shafttorque = motortorque * (1.0 / this->gear_tau);
         // The torque at wheels - for each wheel, given the differential transmission,
         // it is half of the shaft torque  (multiplied the conic gear transmission ratio)
+        
         double singlewheeltorque = 0.5 * shafttorque * (1.0 / this->conic_tau);
         // Set the wheel torque in both 'motor' links, connecting the wheels to the truss;
         if (auto mfun = std::dynamic_pointer_cast<ChFunction_Const>(link_motorL->GetTorqueFunction()))
@@ -613,7 +614,7 @@ public:
         scrollbar_steer = mdevice->getGUIEnvironment()->addScrollBar(true, rect<s32>(10, 105, 150, 120), 0, 101);
         scrollbar_steer->setMax(100);
         scrollbar_steer->setPos(50);
-        text_steer = mdevice->getGUIEnvironment()->addStaticText(L"Direction", rect<s32>(150, 85, 250, 100), false);
+        mdevice->getGUIEnvironment()->addStaticText(L"Direction", rect<s32>(150, 105, 250, 120), false);
         
         // ..add a GUI text and GUI slider to control the stiffness
         scrollbar_FspringK = mdevice->getGUIEnvironment()->addScrollBar(true, rect<s32>(10, 125, 150, 140), 0, 102);
