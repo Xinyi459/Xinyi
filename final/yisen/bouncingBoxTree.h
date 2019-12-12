@@ -3,12 +3,12 @@
 #include <stdlib.h>
 #include <stddef.h>
 
-#define LEAF 1
-#define NODE 0
+#define LEAF 0
+#define NODE 11
 #define LEFT 0
 #define RIGHT 1
 #define MIN_OBJECTS_PER_LEAF 1
-#define MIN_SIZE 0.0001
+#define MIN_SIZE 0.00001
 
 typedef struct Point_Def
 {
@@ -41,6 +41,7 @@ typedef struct BVTreeNode
 	struct BVTreeNode *left;
 	struct BVTreeNode *right;  
 } Node;
+
 /*
 int TestAABB(AABB a,AABB b);
 int findNodeToPut(float mean, float mincoordinate,float maxcoordinate, int num1, int num2);

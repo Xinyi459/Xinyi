@@ -1,3 +1,5 @@
+#ifndef BVTreeTraversal_H
+#define BVTreeTraversal_H
 #include "bouncingBoxTree.h"
 typedef struct Stack_def
 {
@@ -6,3 +8,10 @@ typedef struct Stack_def
 	struct Stack_def *next;
 	struct Stack_def *prev;
 } Stack; 
+
+typedef struct result_def
+{
+	int tri;
+	int sph;  
+} CollisionResult;
+#endif
