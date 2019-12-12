@@ -21,16 +21,16 @@ int *collision(const char *filenameT, const char *filenameS) {
   int r = S[3];
   double *Apex = getApex(filenameT);
   double *center = getCenter(filenameS);
-    
+
   int *Inout = inORout(filenameT, filenameS);
-   
+
   double *A = ReadCSV(filenameT);
   int numT = A[0];
   double *B = ReadCSV(filenameS);
   int numS = B[4];
   double P[9];
   double *Pc;
-    Pc=(double*)malloc(3*sizeof(double));
+  Pc = (double *)malloc(3 * sizeof(double));
   double vectc[9];
   double refvect[9];
   int *collision;
@@ -77,48 +77,48 @@ int *collision(const char *filenameT, const char *filenameS) {
         }
 
         for (int i = 0; i < 3; i++) {
-          dist += pow(line1[i] * line2[i], 2);
+          dist += line1[i] * line2[i];
         }
-        dist =
-            fabs(sqrt(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
-                                   line2[2] * line2[2]));
-          dist=fabs(sqrt(pow(line1[0],2)+pow(line1[1],2)+pow(line1[1],2)-pow(dist,2)));
+        dist = fabs(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
+                                 line2[2] * line2[2]);
+        dist = sqrt(pow(line1[0], 2) + pow(line1[1], 2) + pow(line1[2], 2) -
+                    pow(dist, 2));
         if (dist <= r) {
           collision[c] = 1;
         }
         dist = 0;
 
         for (int i = 0; i < 3; i++) {
-          line1[i] = Pc[i] - P[i];   // BP
-          line2[i] = refvect[3 + i]; // BC
+          line1[i] = Pc[i] - P[3 + i]; // BP
+          line2[i] = refvect[3 + i];   // BC
         }
 
         for (int i = 0; i < 3; i++) {
-          dist += pow(line1[i] * line2[i], 2);
+          dist += line1[i] * line2[i];
         }
-        dist =
-            fabs(sqrt(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
-                                   line2[2] * line2[2]));
-          dist=fabs(sqrt(pow(line1[0],2)+pow(line1[1],2)+pow(line1[1],2)-pow(dist,2)));
+        dist = fabs(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
+                                 line2[2] * line2[2]);
+        dist = sqrt(pow(line1[0], 2) + pow(line1[1], 2) + pow(line1[2], 2) -
+                    pow(dist, 2));
         if (dist <= r) {
           collision[c] = 1;
         }
         dist = 0;
 
         for (int i = 0; i < 3; i++) {
-          line1[i] = Pc[i] - P[i];   // CP
-          line2[i] = refvect[6 + i]; // CA
+          line1[i] = Pc[i] - P[6 + i]; // CP
+          line2[i] = refvect[6 + i];   // CA
         }
 
         for (int i = 0; i < 3; i++) {
-          dist += pow(line1[i] * line2[i], 2);
+          dist += line1[i] * line2[i];
         }
-        dist =
-            fabs(sqrt(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
-                                   line2[2] * line2[2]));
-          dist=fabs(sqrt(pow(line1[0],2)+pow(line1[1],2)+pow(line1[1],2)-pow(dist,2)));
+        dist = fabs(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
+                                 line2[2] * line2[2]);
+        dist = sqrt(pow(line1[0], 2) + pow(line1[1], 2) + pow(line1[2], 2) -
+                    pow(dist, 2));
         if (dist <= r) {
-          collision[c] += 1;
+          collision[c] = 1;
         }
         dist = 0;
         c += 1;
@@ -126,29 +126,28 @@ int *collision(const char *filenameT, const char *filenameS) {
       ////////////////////////////////////////////////////////////////////////////
       else {
         double *centerP = CenterToP(filenameT, filenameS);
-         
-          
+
         // get the direction from Pc to centerP
         double dis[3];
         double distance;
-          for (int k = 0; k < 3; k++) {
-              dis[k] =0;
-          }
         for (int k = 0; k < 3; k++) {
-          dis[k] += Pc[k] - centerP[i * numT*3 + j * 3 + k];
+          dis[k] = 0;
         }
-         
-        distance=0;
+        for (int k = 0; k < 3; k++) {
+          dis[k] += Pc[k] - centerP[i * numT * 3 + j * 3 + k];
+        }
+
+        distance = 0;
         for (int d = 0; d < 3; d++) {
           distance += pow(dis[d], 2);
         }
         distance = fabs(sqrt(distance));
-          
-         if(distance<=r) {
+
+        if (distance <= r) {
           collision[c] += 1;
-          c+= 1;
+          c += 1;
         }
-          c+=1;
+        c += 1;
       }
     }
   }

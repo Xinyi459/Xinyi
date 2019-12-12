@@ -97,7 +97,7 @@ double *CenterToP(const char *filenameT, const char *filenameS) {
       step += 3;
     }
   }
-  
+
   return centerP;
 }
 
@@ -230,9 +230,11 @@ int *inORout(const char *filenameT, const char *filenameS) {
     for (int j = 0; j < numT; j++) {
       for (int k = 0; k < 3; k++) {
         double dot = Dot[i * numT * 3 + j * 3 + k];
-        Inout[step] = 1;//1 means in
+        Inout[step] = 1; // 1 means in
         if (dot < 0)
-          Inout[step] = 0;;
+          Inout[step] = 0;
+        ;
+        break;
       }
       step += 1;
     }
