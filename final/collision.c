@@ -144,8 +144,7 @@ int *collision(const char *filenameT, const char *filenameS) {
         distance = fabs(sqrt(distance));
 
         if (distance <= r) {
-          collision[c] += 1;
-          c += 1;
+          collision[c] = 1;
         }
         c += 1;
       }

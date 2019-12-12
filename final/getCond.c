@@ -156,6 +156,7 @@ int *inORout(const char *filenameT, const char *filenameS) {
         dot += C[i] * anotherC[i];
       }
       Dot[d] = dot / (sqrt(a) * sqrt(b));
+        
       d += 1;
 
       k = 1;
@@ -228,16 +229,18 @@ int *inORout(const char *filenameT, const char *filenameS) {
   int step = 0;
   for (int i = 0; i < numS; i++) {
     for (int j = 0; j < numT; j++) {
-      for (int k = 0; k < 3; k++) {
-        double dot = Dot[i * numT * 3 + j * 3 + k];
         Inout[step] = 1; // 1 means in
-        if (dot < 0)
+      for (int k = 0; k < 3; k++) {
+          
+        double dot = Dot[i * numT * 3 + j * 3 + k];
+          if (dot < 0){
           Inout[step] = 0;
-        ;
-        break;
+          }
       }
-      step += 1;
+        step+=1;
     }
   }
+    
+    
   return Inout;
 }
