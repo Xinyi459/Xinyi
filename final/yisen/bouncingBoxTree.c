@@ -114,9 +114,9 @@ int partitionObjectsTri(double *TriangleData,
 						AABB *pBVleft, 
 						AABB *pBVright)
 {
-	int index=maxIndex(abs(BV.min[0]-BV.max[0]),
-	              abs(BV.min[1]-BV.max[1]),
-	              abs(BV.min[2]-BV.max[2])
+	int index=maxIndex(fabs(BV.max[0]-BV.min[0]),
+	              fabs(BV.max[1]-BV.min[1]),
+	              fabs(BV.max[2]-BV.min[2])
 	);
 	//printf("Partition index= %d\n",index); 
 	int i, j, k, x, y, t;
@@ -227,9 +227,9 @@ int partitionObjectsSph(double *SphereData,
 						AABB *pBVleft, 
 						AABB *pBVright)
 {
-	int index=maxIndex(abs(BV.min[0]-BV.max[0]),
-	              abs(BV.min[1]-BV.max[1]),
-	              abs(BV.min[2]-BV.max[2]));
+	int index=maxIndex(fabs(BV.max[0]-BV.min[0]),
+	              fabs(BV.max[1]-BV.min[1]),
+	              fabs(BV.max[2]-BV.min[2])	);
 	double r=SphereData[3];
 	//printAABB(BV);
 	//printf("Partition index= %d\n",index); 

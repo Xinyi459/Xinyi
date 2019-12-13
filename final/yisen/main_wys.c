@@ -8,12 +8,14 @@
 #include "BVTreeTraversal.h"
 
 int main(int argc, char *argv[]) {
-	const char s1[20]={"bunny_mesh.csv"};
-	const char s2[20]={"sphere_data.csv"}; 
+	const char s1[20]={"mesh.csv"};
+	const char s2[20]={"sphere.csv"}; 
+	const char s3[20]={"out.csv"}; 
 	int mesh_num=0, sphere_num=0, i, j, k;
-	FILE *f1, *f2;
+	FILE *f1, *f2, *f3;
 	f1 = fopen(s1, "r");
 	f2 = fopen(s2, "r");
+	f3 = fopen(s3, "w");
 	double *mesh_data=ReadCSV(f1,&mesh_num,3,3);
 	double radius;
 	double *sphere_data=ReadCSV2(f2,&radius,&sphere_num,3);
@@ -48,12 +50,17 @@ int main(int argc, char *argv[]) {
 	CollisionResult *list;
 	BVTreeTraversal(list,treeTri,treeSph);
 
-
+    double boxes[100];
+	int len_box=0;
+	getBox(treeTri,3,boxes,&len_box);
+	printf("length of box list %d\n",len_box);
+    WriteCSV(f3,boxes,len_box/6,6);
 	if (mesh_data!=NULL) 	free(mesh_data);
 	if (sphere_data!=NULL) 	free(sphere_data);
 	freeTree(treeTri);
     fclose(f1);
     fclose(f2);
+    fclose(f3);
     return 0;
 }
 

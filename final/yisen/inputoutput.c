@@ -38,7 +38,7 @@ double* ReadCSV(FILE* f1, int* n_rows, int n_cols, int kk) {
         len_line = strlen(line);
         count=0;
         for (i = 0; i < len_line; i++) {
-            if ((line[i] == ' ' || line[i] == '\n') && len_strNum > 0) {
+            if ((line[i] == ',' || line[i] == '\n') && len_strNum > 0) {
                 strNum[len_strNum] = '\0';
                 t = strtod(strNum, NULL);
                 mat[index_mat++] = t;
@@ -100,7 +100,7 @@ double* ReadCSV2(FILE* f1, double *r, int* n_rows, int n_cols) {
         len_line = strlen(line);
         count=0;
         for (i = 0; i < len_line; i++) {
-            if ((line[i] == ' ' || line[i] == '\n') && len_strNum > 0) {
+            if ((line[i] == ',' || line[i] == '\n') && len_strNum > 0) {
                 strNum[len_strNum] = '\0';
                 t = strtod(strNum, NULL);
                 mat[index_mat++] = t;
@@ -136,23 +136,19 @@ double* ReadCSV2(FILE* f1, double *r, int* n_rows, int n_cols) {
 }
 
 void WriteCSV(FILE* f2,
-              double* vertex_data,
-              double* triangle_data,
-              int vertex_num,
-              int triangle_num) {
+              double* data,
+              int rows,
+              int cols) {
     if (f2 == NULL)
         printf("Failed to write file!\n");
-    int cols_triangle=4,cols_vertex=5;
     int i, j, k;
-    fprintf(f2,"%d\n",triangle_num);
-    if (vertex_data != NULL && triangle_data!=NULL) {
-        for ( k= 0; k < triangle_num; k++)
-            for (i = 0; i < 3; i++) {
-            	int index=triangle_data[k*cols_triangle+i+1];
-            	for (j=0;j<3;j++) {
-                    fprintf(f2, "%f ", vertex_data[index * cols_vertex + j]);
+    fprintf(f2,"%d\n",rows);
+    if (data != NULL ) {
+        for ( i= 0; i < rows; i++){
+            for (j = 0; j < cols-1; j++) {
+                fprintf(f2, "%f,", data[i* cols + j]);
                 }
-               fprintf(f2, "\n");
+               fprintf(f2, "%f\n", data[i* cols + cols-1]);
             }
         
     } else {
@@ -160,3 +156,4 @@ void WriteCSV(FILE* f2,
     }
     
 }
+

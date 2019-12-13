@@ -125,3 +125,18 @@ void BVTreeTraversal(CollisionResult *r, Node *Tri, Node *Sph)
 	}
 	
 } 
+
+void getBox(Node *treeTri, int deep, double *boxes, int *index)
+{
+	if (deep>0)
+	{
+		AABB a=treeTri->BV;
+		for (int i=0;i<3;i++) {
+				boxes[(*index)]=a.min[i];
+				boxes[(*index)+1]=a.max[i];
+				*index=*index+2;
+			}
+		if (treeTri->left != NULL)  getBox(treeTri->left,deep-1,boxes,index);
+		if (treeTri->right != NULL) getBox(treeTri->right,deep-1,boxes,index);
+	} 
+}

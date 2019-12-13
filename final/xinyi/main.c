@@ -16,11 +16,11 @@
 
 int main(int argc, const char *argv[]) {
   const char *filenameS =
-      "/Users/user/Documents/Xcode/Practice/459/459/sphere.csv";
+      "D:/Courses/ME459/finalProject/src/Xinyi/Xinyi/final/sphere.csv";
   // const char *filenameT
   // ="/Users/user/Documents/Xcode/Practice/459/459/bunny_mesh1.csv";
   const char *filenameT =
-      "/Users/user/Documents/Xcode/Practice/459/459/mesh.csv";
+      "D:/Courses/ME459/finalProject/src/Xinyi/Xinyi/final/mesh.csv";
 
   ///////////////first method////////////
   int *colli;

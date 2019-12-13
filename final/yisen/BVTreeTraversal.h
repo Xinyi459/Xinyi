@@ -9,9 +9,5 @@ typedef struct Stack_def
 	struct Stack_def *prev;
 } Stack; 
 
-typedef struct result_def
-{
-	int tri;
-	int sph;  
-} CollisionResult;
+typedef int CollisionResult;
 #endif
