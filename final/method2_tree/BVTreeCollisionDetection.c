@@ -3,17 +3,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "inputData.c"
 #include "bouncingBoxTree.h"
 #include "BVTreeTraversal.h"
+#include "inputData.h"
+#include "getCond_new.h"
 #include "bouncingBoxTree.c"
 #include "BVTreeTraversal.c"
+#include "inputData.c"
 #include "getCond_new.c"
 
 int main(int argc, char *argv[]) {
 	const char s1[20]={"mesh.csv"};
 	const char s2[20]={"sphere.csv"}; 
-	const char s3[20]={"out.csv"}; 
+	const char s3[20]={"collision_detection.out"}; 
 	int mesh_num=0, sphere_num=0, result_len=0, i, j, k;
 	FILE *f1, *f2, *f3;
 	f1 = fopen(s1, "r");
@@ -23,7 +25,6 @@ int main(int argc, char *argv[]) {
 	double radius;
 	double *sphere_data=ReadCSV2(f2,&radius,&sphere_num,3);
 	int objects1[30000],tobjects1[30000],objects2[30000],tobjects2[30000];
-	
 	clock_t start_time = clock();
 	for (i=0;i<mesh_num;i++) {
 		objects1[i]=i;
@@ -33,8 +34,8 @@ int main(int argc, char *argv[]) {
 	}
 	Node *treeTri,*treeSph;
 	AABB BV0,BV1;
-    setAABB(&BV0);
-    setAABB(&BV1);
+        setAABB(&BV0);
+        setAABB(&BV1);
     /// Update bouncing box for root
 	for (i=0;i<mesh_num;i++)
 	{
@@ -60,7 +61,7 @@ int main(int argc, char *argv[]) {
     double time_tree = ((double)(end_time - start_time)) / CLOCKS_PER_SEC * 1000;
     
 
-	printf("length of collision pair %d\ntime consume for bouncing volumn tree %f\n",result_len,time_tree);
+	printf("length of collision pair %d\ntime consume %f ms\n",result_len,time_tree);
     printList(f3,list,result_len,time_tree);
     
     int debug=0;
@@ -73,10 +74,16 @@ int main(int argc, char *argv[]) {
       DirectTraversal(mesh_data, mesh_num, sphere_data, sphere_num, &result_len);
       end_time = clock();
       double time_direct = ((double)(end_time - start_time)) / CLOCKS_PER_SEC * 1000;
-      printf("Time consume for brute force %f\n",time_direct);
+      printf("Time consume for brute force %f ms\n",time_direct);
     }
-  
-    
+    debug=0;
+    if (debug) {
+    	double a[9]={1,0,0,0,0.5,0,0,0,0};
+    	double b[4]={3,0,0,0.5};
+    	int res=colli(a,b);
+    	printf("test %d",res);
+    	
+    }
 	if (mesh_data!=NULL) 	free(mesh_data);
 	if (sphere_data!=NULL) 	free(sphere_data);
 	freeTree(treeTri);

@@ -2,13 +2,22 @@
 #include <stddef.h>
 #include "bouncingBoxTree.h"
 #include "BVTreeTraversal.h"
+#include <stdio.h>
 
-
+//***************************************************************************************
+//
+//! \brief  Stack implementation: push Node a and Node b into Stack c/
+//!
+//! \param  [in] number is the data you want to print.
+//! \retval the number of print information, in bytes. return zero indicate print error !.
+//!
+//! \note
+//! * Be sure you have called \ref Dev_Init function before call this fuction.
+//! * Remember to check return value.
+//
+//***************************************************************************************
 void Push(Stack **s,Node *a, Node *b)
 {
-/**	
-Stack implementation: push Node a and Node b into Stack c 
-*/
 	Stack *node=(Stack *)malloc(sizeof(Stack));
 	node->node1=a;
 	node->node2=b;
@@ -24,11 +33,14 @@ Stack implementation: push Node a and Node b into Stack c
 	}
 	
 }
+//***************************************************************************************
+//
+//! \brief  Stack implementation: Pop stack element into a and b \n 
+//
+//***************************************************************************************
 void Pop(Stack **s, Node** a, Node **b)
 {
-/**	
-Stack implementation: Pop stack element into a  and b
-*/
+
 	Stack *t;
 	(*a)=(*s)->node1;
 	(*b)=(*s)->node2;
@@ -36,12 +48,20 @@ Stack implementation: Pop stack element into a  and b
 	(*s)=(*s)->prev;
 	free(t);
 }
-
+//***************************************************************************************
+//
+//! \brief  Stack implementation: Check is Stack empty \n 
+//!
+//! \param  [in] number is the data you want to print.
+//! \retval the number of print information, in bytes. return zero indicate print error !.
+//!
+//! \note
+//! * Be sure you have called \ref Dev_Init function before call this fuction.
+//! * Remember to check return value.
+//
+//***************************************************************************************
 int isEmpty(Stack *s)
 {
-/**	
-Stack implementation: Check is Stack empty
-*/
 	if (s==NULL) 
 	return(1);
 	else
@@ -51,8 +71,8 @@ Stack implementation: Check is Stack empty
 int isLeaf(Node *a)
 {
 /**	
-Traversal implementation: Check type of Node a, return 1 if a is LEAF 
-*/
+ *Traversal implementation: Check type of Node a, return 1 if a is LEAF  \n 
+ */
 	if (a->type==LEAF) 
 	return(1);
 	else 
@@ -62,9 +82,9 @@ Traversal implementation: Check type of Node a, return 1 if a is LEAF
 int compareAABB(AABB *box1, AABB *box2)
 {
 /** 
-AABB implementation: Compare the volumn of two bouncing box
-return 1 if box1>box2 
-*/
+ *AABB implementation: Compare the volumn of two bouncing box \n 
+ *return 1 if box1>box2  \n 
+ */
 	float v1=1,v2=1;
 	for (size_t i;i<3;i++)
 	{
@@ -78,9 +98,9 @@ return 1 if box1>box2
 int descendA(Node *a, Node *b)
 {
 /** 
-Traversal implementation: Decide which child to descend into
-return 1 if descend into Node a first 
-*/
+ *Traversal implementation: Decide which child to descend into \n 
+ *return 1 if descend into Node a first \n 
+ */ 
 	int i;
 	if (isLeaf(b)) i=1;
 	  else {
@@ -95,30 +115,27 @@ return 1 if descend into Node a first
    }
 	return i;
 }
-void BVTreeTraversal( Node *Tri, Node *Sph, double *TriangleData, double *SphereData, CollisionResult *r, int *lenResults)
+//***************************************************************************************
+//
+//! Traversal implementation: Traversal two bouncing volumn trees \n 
+//!
+//! \param  [Tri] bouncing volumn tree for triangle mesh
+//! \param  [Sph] bouncing volumn tree for Sphere
+//! \param  [STriangleData, SphereData] pointer to original data
+//! \param  [r] List for storing result
+//!
+//! \note
+//! * Be sure you have called \ref Dev_Init function before call this fuction.
+//! * Remember to check return value.
+//
+//***************************************************************************************
+void BVTreeTraversal( Node *Tri, Node *Sph, 
+                      double *TriangleData, double *SphereData, 
+                      CollisionResult *r, int *lenResults)
 {
-/**	
-Traversal implementation: Traversal two bouncing volumn trees
-Argument: Tri: bouncing volumn tree for triangle mesh 
-          Sph: bouncing volumn tree for Sphere
-		  TriangleData, SphereData: pointer to original data
-		  CollisionResult *r: List for storing result 
-   
-*/
+
 	Stack *s= NULL;
 	while (1) {
-	//	printf("in\n");
-	//	printAABB(Tri->BV);
-	//	printf("\n");
-	//    printAABB(Sph->BV);
-	//    printf("==========\n");
-	//    printf("%d\n",Tri->type );
-//	printf("\nLoop begin\n");
-//	printf("Tri objects number%d\n",Tri->numObject);
-	//printf("Sph objects number%d\n",Sph->numObject);
-//	printf("Type  %d %d result %d collision %d\n",Tri->type,Sph->type,(isLeaf(Tri) && isLeaf(Sph) ),TestAABB(Tri->BV,Sph->BV));
-//	printAABB(Tri->BV);printAABB(Sph->BV);
-//	printf("AABB %d\n",TestAABB(Tri->BV,Sph->BV));
     if (TestAABB(Tri->BV,Sph->BV)==3)
 	{
 		printAABB(Tri->BV);printAABB(Sph->BV);
@@ -165,12 +182,14 @@ Argument: Tri: bouncing volumn tree for triangle mesh
 	}
 	
 } 
-
-void DirectTraversal( double *TriangleData, int tri_num,double *SphereData,int sph_num, int *lenResults)
+//***************************************************************************************
+//
+//! \brief  Traversal implementation: Brute force traversal
+//
+//***************************************************************************************
+void DirectTraversal( double *TriangleData, int tri_num,
+                      double *SphereData,int sph_num, int *lenResults)
 {
-/**
-Traversal implementation: Brute force traversal
-*/
 	int i,j;
 	for (i=0;i<tri_num;i++)
 	for (j=0;j<sph_num;j++)
@@ -192,13 +211,14 @@ Traversal implementation: Brute force traversal
 			} 
 	}
 }
+//***************************************************************************************
+//
+//! \brief  Debug purpose: Print bouncing Box for first k level bouncing tree
+//
+//***************************************************************************************
 
 void getBox(Node *treeTri, int deep, double *boxes, int *index)
 {
-/**
-Debug purpose: Print bouncing Box for first k level bouncing tree
-               
-*/
 	if (deep>0)
 	{
 		AABB a=treeTri->BV;
@@ -211,18 +231,21 @@ Debug purpose: Print bouncing Box for first k level bouncing tree
 		if (treeTri->right != NULL) getBox(treeTri->right,deep-1,boxes,index);
 	} 
 }
-
+//***************************************************************************************
+//
+//! \brief  Print results of collision detection into file f3 
+//
+//***************************************************************************************
 void printList(FILE *f3, CollisionResult *r,int len,double time)
 {
-/**
-Print results of collision detection into file f3
-*/
-	fprintf(f3,"%d %f\n",len,time);
+
+	//printf("Number of results %d Time %f\n",len,time);
+	fprintf(f3,"s,t\n",len,time);
 	CollisionResult *t;
-	for (int i;i<len;i++)
-	  {
+	for (int i=0;i<len;i++)
+	  {     //printf("inprint %d\n",i);
 	  	t=r->next;
-	  	fprintf(f3,"%d %d\n",r->tri,r->sph); 
+	  	fprintf(f3,"%d,%d\n",r->tri,r->sph); 
 	  	free(r);
 	  	r=t;
 	  }

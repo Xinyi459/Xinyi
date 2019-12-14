@@ -16,10 +16,10 @@ double* ReadCSV1(FILE* f1, int* n_rows, int n_cols, int kk) {
         printf("Failed to open file!\n");
          return NULL;
     }
-    char line[1000];
+    char line[2000];
     int p, i, j,  len_line, index_mat=0, len_strNum = 0, count;
-    float mat[200000], t;
-    char strNum[100];
+    float mat[300000], t;
+    char strNum[200];
     double* data_ptr = NULL;
     
     fgets(line, 512, f1);
@@ -42,7 +42,7 @@ double* ReadCSV1(FILE* f1, int* n_rows, int n_cols, int kk) {
                 strNum[len_strNum] = '\0';
                 t = strtod(strNum, NULL);
                 mat[index_mat++] = t;
-               // printf("%f ",t);
+                //printf("%f ",t);
                 count++;
                 len_strNum = 0;
             } else {
@@ -58,7 +58,7 @@ double* ReadCSV1(FILE* f1, int* n_rows, int n_cols, int kk) {
     if (index_mat == (*n_rows * n_cols*kk)) {
         data_ptr = (double*)calloc((*n_rows * n_cols*kk), sizeof(double));
         if (data_ptr != NULL) {
-            for (i = 0; i < *n_rows * n_cols*kk; i++)
+            for (i = 0; i < (*n_rows) * n_cols*kk; i++)
                 data_ptr[i] = mat[i];
         } else
             printf("Failed when doing malloc\n");
@@ -66,7 +66,6 @@ double* ReadCSV1(FILE* f1, int* n_rows, int n_cols, int kk) {
     } else {
         printf("Failed to read file: missing enrty\n");
     }
-
     return data_ptr;
 }
 
@@ -135,10 +134,7 @@ double* ReadCSV2(FILE* f1, double *r, int* n_rows, int n_cols) {
     return data_ptr;
 }
 
-void WriteCSV(FILE* f2,
-              double* data,
-              int rows,
-              int cols) {
+void WriteCSV(FILE* f2, double* data, int rows, int cols) {
     if (f2 == NULL)
         printf("Failed to write file!\n");
     int i, j, k;
