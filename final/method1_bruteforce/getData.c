@@ -11,6 +11,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+//************************************************************************
+//
+//! \brief put all the data we need into an array 
+//
+//************************************************************************
 double *ReadCSV(const char *filename) {
   FILE *fp;
   fp = fopen(filename, "r");
@@ -45,6 +51,12 @@ double *ReadCSV(const char *filename) {
   return A;
 }
 
+
+//************************************************************************
+//
+//! \brief get each triangle's apex data store in an array
+//
+//************************************************************************
 double *getApex(const char *filename) {
   double *T;
   double *Apex;
@@ -59,6 +71,11 @@ double *getApex(const char *filename) {
   return Apex;
 }
 
+//************************************************************************
+//
+//! \brief get each sphere's center data
+//
+//************************************************************************
 double *getCenter(const char *filename) {
   double *S;
   double *center;
