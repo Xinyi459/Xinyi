@@ -78,6 +78,12 @@ double *CrossMatrix(double *vect) {
   return C;
 }
 
+
+
+
+
+
+
 int colli(double triangle_data[9], double sphere_data[4]) {
   double center[3];
   for (int i = 0; i < 3; i++) {
@@ -258,5 +264,11 @@ int colli(double triangle_data[9], double sphere_data[4]) {
     }
     dist = 0;
   }
+    free(C);
+    free(anotherC);
+    free(vect);
+    free(refvect);
+    free(anotherLine);
+    free(Dot);
   return colli;
 }

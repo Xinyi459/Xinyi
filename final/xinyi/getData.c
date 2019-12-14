@@ -27,7 +27,7 @@ double *ReadCSV(const char *filename) {
   }
   fclose(fp);
   // put values in csv file into array A
-  int m = (n - n / 4) * 3 + n / 4;
+  int m = n*4;
   double *A;
   A = (double *)malloc(m * sizeof(double));
   fp = fopen(filename, "r");
@@ -52,7 +52,7 @@ double *getApex(const char *filename) {
   double num = T[0];
   Apex = (double *)malloc(num * 9 * sizeof(double));
   int k = 0;
-  for (int i = 1; i < num * 9; i++) {
+  for (int i = 1; i < num * 9+1; i++) {
     Apex[k] = T[i];
     k += 1;
   }
