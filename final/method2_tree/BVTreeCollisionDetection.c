@@ -60,20 +60,20 @@ int main(int argc, char *argv[]) {
 	printf("length of collision pair %d\ntime consume %f ms\n",result_len,time_tree);
     printList(f3,list,result_len,time_tree);
     
-    int debug=0;
-    if (debug) {
-      double boxes[100];
-      int len_box=0;
-      getBox(treeTri,3,boxes,&len_box);
-      start_time = clock();
+    int compare=0;
+    if (compare) {
+       start_time = clock();
       result_len=0;
       DirectTraversal(mesh_data, mesh_num, sphere_data, sphere_num, &result_len);
       end_time = clock();
       double time_direct = ((double)(end_time - start_time)) / CLOCKS_PER_SEC * 1000;
       printf("Time consume for brute force %f ms\n",time_direct);
     }
-    debug=0;
+    int debug=0;
     if (debug) {
+    	double boxes[100];
+        int len_box=0;
+        getBox(treeTri,3,boxes,&len_box);
     	double a[9]={1,0,0,0,0.5,0,0,0,0};
     	double b[4]={3,0,0,0.5};
     	int res=colli(a,b);
