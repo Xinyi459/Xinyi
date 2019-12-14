@@ -1,8 +1,9 @@
 ///Yisen Wang
 #include <stddef.h>
+#include <stdio.h>
 #include "bouncingBoxTree.h"
 #include "BVTreeTraversal.h"
-#include <stdio.h>
+
 
 //***************************************************************************************
 //
@@ -240,7 +241,7 @@ void printList(FILE *f3, CollisionResult *r,int len,double time)
 {
 
 	//printf("Number of results %d Time %f\n",len,time);
-	fprintf(f3,"s,t\n",len,time);
+	fprintf(f3,"s,t\n");
 	CollisionResult *t;
 	for (int i=0;i<len;i++)
 	  {     //printf("inprint %d\n",i);

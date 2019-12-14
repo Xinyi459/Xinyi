@@ -7,15 +7,11 @@
 #include "BVTreeTraversal.h"
 #include "inputData.h"
 #include "getCond_new.h"
-#include "bouncingBoxTree.c"
-#include "BVTreeTraversal.c"
-#include "inputData.c"
-#include "getCond_new.c"
 
 int main(int argc, char *argv[]) {
 	const char s1[20]={"mesh.csv"};
 	const char s2[20]={"sphere.csv"}; 
-	const char s3[20]={"collision_detection.out"}; 
+	const char s3[40]={"collision_detection.out"}; 
 	int mesh_num=0, sphere_num=0, result_len=0, i, j, k;
 	FILE *f1, *f2, *f3;
 	f1 = fopen(s1, "r");
