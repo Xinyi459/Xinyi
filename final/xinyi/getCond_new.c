@@ -199,7 +199,7 @@ int colli(double triangle_data[9], double sphere_data[4]) {
     }
   }
   // collision or not; 1 means collision
-  int r = sphere_data[3];
+  double r = sphere_data[3];
   int colli = 0;
   double dist = 0;
   double line1[3], line2[3];
