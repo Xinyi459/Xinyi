@@ -13,6 +13,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+//************************************************************************
+//
+//! \brief Get the plane equation of triangular mesh(ax + by + cz + d = 0)
+//
+//************************************************************************
 double *GetplaneT(double triangle_data[9]) {
   double *plane;
   double a, b, c, d;
@@ -37,6 +42,11 @@ double *GetplaneT(double triangle_data[9]) {
   return plane;
 }
 
+//************************************************************************
+//
+//! \brief Computing project point of sphere center on each plane
+//
+//************************************************************************
 double *project(double triangle_data[9], double sphere_data[4]) {
   double *plane = GetplaneT(triangle_data);
   double *centerP;
@@ -83,7 +93,11 @@ double *CrossMatrix(double *vect) {
 
 
 
-
+//************************************************************************************
+//
+//! \brief Determine if a team of balls and grids collide，return 0 means no collision
+//
+//************************************************************************************
 int colli(double triangle_data[9], double sphere_data[4]) {
   double center[3];
   for (int i = 0; i < 3; i++) {
