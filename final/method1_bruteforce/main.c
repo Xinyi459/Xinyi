@@ -7,12 +7,9 @@
 //
 
 
-#include "getCond.h"
+
 #include "getCond_new.h"
 #include "getData.h"
-#include "getCond.c"
-#include "getCond_new.c"
-#include "getData.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,9 +51,8 @@ int main(int argc, const char *argv[]) {
         }
     }
     clock_t end = clock();
-    double time = (double)(end - start);
+    double time = ((double)(end - start)) / CLOCKS_PER_SEC * 1000;
     printf("the first method used time: %f\n", time);
-    ////////////////second method//////////////
     
     ///////////////output//////////////////////
     
@@ -75,6 +71,7 @@ int main(int argc, const char *argv[]) {
     }
     fclose(fp);
     fp = NULL;
+    free(collis);
    
     return 0;
 }
