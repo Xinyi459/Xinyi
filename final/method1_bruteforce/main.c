@@ -71,6 +71,7 @@ int main(int argc, const char *argv[]) {
     }
     fclose(fp);
     fp = NULL;
+    free(collis);
    
     return 0;
 }
