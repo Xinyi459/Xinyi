@@ -11,7 +11,7 @@ void writeStrToFile(FILE* f, char* str) {
     }
 }
 
-double* ReadCSV(FILE* f1, int* n_rows, int n_cols, int kk) {
+double* ReadCSV1(FILE* f1, int* n_rows, int n_cols, int kk) {
     if (f1 == NULL) {
         printf("Failed to open file!\n");
          return NULL;

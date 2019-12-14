@@ -9,5 +9,9 @@ typedef struct Stack_def
 	struct Stack_def *prev;
 } Stack; 
 
-typedef int CollisionResult;
+typedef struct CollisionResult_def{
+	int tri;
+	int sph;
+	struct CollisionResult_def* next;
+} CollisionResult;
 #endif

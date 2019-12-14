@@ -1,3 +1,4 @@
+///Yisen Wang
 #include <stdlib.h>
 #include <stdio.h>
 #include <stddef.h>
@@ -6,10 +7,11 @@
 #include "bouncingBoxTree.h"
 
 
-Triangle * TriangleData;
-
 void printAABB(AABB a)
 {
+/**
+Debug implementation: print bouncing box
+*/
 	printf("printAABB\n");
 	int i;
 	for (i=0;i<3;i++)
@@ -18,6 +20,9 @@ void printAABB(AABB a)
 
 void setAABB(AABB *a)
 {
+/**
+Bouncing Box implementation: set BV to zero
+*/
 	int i;
 	for (i=0;i<3;i++) {
 	    a->min[i]=0;
@@ -27,6 +32,9 @@ void setAABB(AABB *a)
 }
 void printArr(int *a,int n)
 {
+/**
+Debug implementation: print objects list that contain all objects in this node
+*/
 	int i;
 	for (i=0;i<n;i++)
 	  printf("%d ",a[i]);
@@ -35,6 +43,12 @@ void printArr(int *a,int n)
 
 double maxIndex(double x, double y, double z)
 {
+/**
+BV Tree implementation: find axis that has largest length
+return index of the axis: 0 - x axis
+                          1 - y axis
+                          2 - z axis
+*/
 	if (x>=y && x>=z ) return 0;
 	if (y>=x && y>=z ) return 1;
 	if (z>=x && z>=y ) return 2;
@@ -56,9 +70,11 @@ double min(float x, float y, float z)
 
 int TestAABB(AABB a,AABB b)
 {
-	/*
-	return 0 if two AABB are intersected.
-	*/
+/**
+Bouncing Box implementation: chech whether two bouncing box intersect 
+                             by checking the projections onto 3 axis
+return 0 if two AABB are intersected.
+*/
 	if (a.max[0] < b.min[0] || a.min[0] > b.max[0]) return 1;
 	if (a.max[1] < b.min[1] || a.min[1] > b.max[1]) return 1;
 	if (a.max[2] < b.min[2] || a.min[2] > b.max[2]) return 1;
@@ -67,6 +83,11 @@ int TestAABB(AABB a,AABB b)
 
 int findNodeToPut(float mean, float minCoordinate,float maxCoordinate, int num1, int num2)
 {
+/**
+BV Tree implementation: find child with least number of object to put new object
+return 0 - left node
+       1 - right node
+*/
 	if (maxCoordinate <= mean ) return LEFT;
 	if (minCoordinate >= mean ) return RIGHT;
 	if (maxCoordinate > mean && minCoordinate < mean)
@@ -76,7 +97,9 @@ int findNodeToPut(float mean, float minCoordinate,float maxCoordinate, int num1,
 
 void updateBouncingBoxTri(double *TriangleData,int index,AABB *pBV)
 {
-//	printf("innnnnnnnnnnnnn\n");
+/**
+BV Tree implementation(Triangle): update bouncing box with a new triangle
+*/
 	if (pBV->max[0]-pBV->min[0] < MIN_SIZE &&
 	   pBV->max[1]-pBV->min[1]  < MIN_SIZE && 
 	   pBV->max[2]-pBV->min[2]  < MIN_SIZE) {
@@ -114,6 +137,10 @@ int partitionObjectsTri(double *TriangleData,
 						AABB *pBVleft, 
 						AABB *pBVright)
 {
+/**
+BV Tree implementation(Triangle): divide objects into 2 node by its position on the longest axis
+                                  update the boucing box for two nodes at the same time
+*/
 	int index=maxIndex(fabs(BV.max[0]-BV.min[0]),
 	              fabs(BV.max[1]-BV.min[1]),
 	              fabs(BV.max[2]-BV.min[2])
@@ -160,9 +187,14 @@ void buildBVTreeTri(double *TriangleData,
 					int *objects, int *tobjects, 
 					int numObjects, AABB BV,int *debug)
 {
-	//assert(numObjects>0);
-	//printf("\nNumber of Objects in this node %d\n Objects index ",numObjects);
-	//printArr(objects,numObjects);
+/**
+BV Tree implementation(Triangle): main function for build BV tree
+Argument: TriangleData
+          tree Node
+          objects: list of objects contained in the node
+          tobjects: for re-sort the list, save space by not creating new list every time
+          BV: bouncing box that contain all objects in this node
+*/
 	Node *pNode=(Node*)malloc(sizeof(Node));
     AABB BVleft, BVright;
     setAABB(&BVleft);
@@ -197,7 +229,9 @@ void buildBVTreeTri(double *TriangleData,
 } 
 void updateBouncingBoxSph(double *SphereData,int index,AABB *pBV)
 {
-//	printf("innnnnnnnnnnnnn\n");
+/**
+BV Tree implementation(Sphere): update bouncing box with a new sphere
+*/
     double r=SphereData[index*4+3];
 	if (pBV->max[0]-pBV->min[0] < MIN_SIZE &&
 	   pBV->max[1]-pBV->min[1]  < MIN_SIZE && 
@@ -227,6 +261,10 @@ int partitionObjectsSph(double *SphereData,
 						AABB *pBVleft, 
 						AABB *pBVright)
 {
+/**
+BV Tree implementation(Sphere): divide objects into 2 node by its position on the longest axis
+                                update the boucing box for two nodes at the same time
+*/
 	int index=maxIndex(fabs(BV.max[0]-BV.min[0]),
 	              fabs(BV.max[1]-BV.min[1]),
 	              fabs(BV.max[2]-BV.min[2])	);
@@ -269,9 +307,14 @@ void buildBVTreeSph(double *SphereData,
 					int *objects, int *tobjects, 
 					int numObjects, AABB BV,int *debug)
 {
-	//assert(numObjects>0);
-	//printf("\nNumber of Objects in this node %d\n Objects index \n",numObjects);
-	//printArr(objects,numObjects);
+/**
+BV Tree implementation(Sphere): main function for build BV tree
+Argument: SphereData
+          tree Node
+          objects: list of objects contained in the node
+          tobjects: for re-sort the list, save space by not creating new list every time
+          BV: bouncing box that contain all objects in this node
+*/
 	Node *pNode=(Node*)malloc(sizeof(Node));
     AABB BVleft, BVright;
     setAABB(&BVleft);
@@ -306,6 +349,9 @@ void buildBVTreeSph(double *SphereData,
 
 void freeTree(Node *a)
 {
+/**
+BV Tree implementation: Free tree recursively
+*/
 	if (a->left!= NULL)
 	  freeTree(a->left);
 	if (a->right!= NULL)
