@@ -14,6 +14,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+//************************************************************************
+//
+//! \brief Get the plane equation of triangular mesh(ax + by + cz + d = 0)
+//
+//************************************************************************
+
 double *
 Getplane(const char *filename) { // the number of apexs is len*3/4，number of
   // triangles is lenT/4
@@ -54,6 +60,12 @@ Getplane(const char *filename) { // the number of apexs is len*3/4，number of
 
   return plane;
 }
+
+//************************************************************************
+//
+//! \brief Computing project point of sphere center on each plane
+//
+//************************************************************************
 
 double *CenterToP(const char *filenameT, const char *filenameS) {
   double *center = getCenter(filenameS);
