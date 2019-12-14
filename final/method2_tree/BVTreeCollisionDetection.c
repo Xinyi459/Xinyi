@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "getCond_new.h"
 #include "bouncingBoxTree.h"
 #include "BVTreeTraversal.h"
 #include "inputData.h"
-#include "getCond_new.h"
 
 int main(int argc, char *argv[]) {
 	const char s1[20]={"mesh.csv"};
