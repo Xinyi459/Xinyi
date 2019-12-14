@@ -200,6 +200,9 @@ int colli(double triangle_data[9], double sphere_data[4]) {
   double r = sphere_data[3];
   int colli = 0;
   double dist = 0;
+    double test1=0;
+    double test2=0;
+    double test3=0;
   double line1[3], line2[3];
   if (flag == 1) {
     for (int i = 0; i < 3; i++) {
@@ -214,18 +217,29 @@ int colli(double triangle_data[9], double sphere_data[4]) {
   } else {
 
     for (int i = 0; i < 3; i++) {
-      line1[i] = center[i] - triangle_data[i];            // AP
-      line2[i] = triangle_data[3 + i] - triangle_data[i]; // AB
+      line1[i] = center[i] - triangle_data[i];            // PA
+      line2[i] = triangle_data[3 + i] - triangle_data[i]; // BA
     }
+      
     for (int i = 0; i < 3; i++) {
       dist += line1[i] * line2[i];
     }
+      test1=dist / (sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
+                        line2[2] * line2[2])*sqrt(line1[0] * line1[0] + line1[1] * line1[1] +
+                                                  line1[2] * line1[2]));
+      
     dist = fabs(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
                              line2[2] * line2[2]);
+     
     dist = sqrt(pow(line1[0], 2) + pow(line1[1], 2) + pow(line1[2], 2) -
                 pow(dist, 2));
     if (dist <= r) {
       colli = 1;
+        if(fabs(test1)==1){
+            if(pow(line1[0], 2) + pow(line1[1], 2) + pow(line1[2], 2)&&(pow((center[0]-triangle_data[3+0]),2)+pow((center[1]-triangle_data[3+1]),2)+pow((center[2]-triangle_data[3+2]),2))>r*r){
+                colli=0;
+            }
+        }
     }
     dist = 0;
 
@@ -236,13 +250,23 @@ int colli(double triangle_data[9], double sphere_data[4]) {
     for (int i = 0; i < 3; i++) {
       dist += line1[i] * line2[i];
     }
+      test2=dist / (sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
+                        line2[2] * line2[2])*sqrt(line1[0] * line1[0] + line1[1] * line1[1] +
+                                                  line1[2] * line1[2]));
     dist = fabs(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
                              line2[2] * line2[2]);
+      
     dist = sqrt(pow(line1[0], 2) + pow(line1[1], 2) + pow(line1[2], 2) -
                 pow(dist, 2));
-    if (dist <= r) {
-      colli = 1;
-    }
+
+      if (dist <= r) {
+          colli = 1;
+          if(fabs(test2)==1){
+              if(pow(line1[0], 2) + pow(line1[1], 2) + pow(line1[2], 2)&&(pow((center[0]-triangle_data[6+0]),2)+pow((center[1]-triangle_data[6+1]),2)+pow((center[2]-triangle_data[6+2]),2))>r*r){
+                  colli=0;
+              }
+          }
+      }
     dist = 0;
 
     for (int i = 0; i < 3; i++) {
@@ -253,13 +277,22 @@ int colli(double triangle_data[9], double sphere_data[4]) {
     for (int i = 0; i < 3; i++) {
       dist += line1[i] * line2[i];
     }
+      test3=dist / (sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
+                       line2[2] * line2[2])*sqrt(line1[0] * line1[0] + line1[1] * line1[1] +
+                                                 line1[2] * line1[2]));
     dist = fabs(dist) / sqrt(line2[0] * line2[0] + line2[1] * line2[1] +
                              line2[2] * line2[2]);
+      
     dist = sqrt(pow(line1[0], 2) + pow(line1[1], 2) + pow(line1[2], 2) -
                 pow(dist, 2));
-    if (dist <= r) {
-      colli = 1;
-    }
+      if (dist <= r) {
+          colli = 1;
+          if(fabs(test3)==1){
+              if(pow(line1[0], 2) + pow(line1[1], 2) + pow(line1[2], 2)&&(pow((center[0]-triangle_data[0]),2)+pow((center[1]-triangle_data[1]),2)+pow((center[2]-triangle_data[2]),2))>r*r){
+                  colli=0;
+              }
+          }
+      }
     dist = 0;
   }
     free(C);
@@ -268,5 +301,7 @@ int colli(double triangle_data[9], double sphere_data[4]) {
     free(refvect);
     free(anotherLine);
     free(Dot);
+    
   return colli;
 }
+
